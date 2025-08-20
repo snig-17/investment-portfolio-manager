@@ -1,118 +1,92 @@
+# Spring Boot Configuration for Financial Portfolio Management System
 spring:
   application:
-    name: investment-portfolio-manager
-
-
-  #database configuration
+    name: portfolio-management-system
+  
+  # Database Configuration
   datasource:
     url: jdbc:postgresql://localhost:5432/portfolio_db
     username: portfolio_user
-    password: your_password
+    password: portfolio_password
     driver-class-name: org.postgresql.Driver
-    hikari:
-      # Connection pool settings (important for financial apps)
-      maximum-pool-size: 20
-      minimum-idle: 5
-      connection-timeout: 30000
-      idle-timeout: 600000
-      max-lifetime: 1800000
 
-  #JPA configuration
+  # JPA/Hibernate Configuration
   jpa:
     hibernate:
-      ddl-auto: create-drop #creates tables automatically
-      show-sql: true # shows SQL queries in console
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.PostgreSQLDialect
-          format_sql: true # Makes SQL queries readable
-          use_sql_comments: true
-          jdbc:
-            time_zone: IST # Important for financial timestamps
-        open-in-view: false
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-  #Server configuration
-  server:
-    port: 8000
-    servlet:
-      context-path: /api #all endpoints will be /api/...
+  # Jackson JSON Configuration
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: UTC
 
-      # Logging Configuration (Professional setup)
-      logging:
-        level:
-          com.snig.investment-portfolio-manager: DEBUG
-          org.hibernate.SQL: DEBUG
-          org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-          org.springframework.web: DEBUG
-        pattern:
-          console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-          file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-        file:
-          name: logs/portfolio-manager.log
+# Server Configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /api
 
-      # Custom Application Properties
-      portfolio:
-        # External API Configuration (for stock prices)
-        api:
-          alpha-vantage:
-            api-key: ${ALPHA_VANTAGE_API_KEY:demo}  # We'll get a real key later
-            base-url: https://www.alphavantage.co/query
+# Logging Configuration
+logging:
+  level:
+    com.portfoliomanagement: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
-        # Risk Calculation Settings
-        risk:
-          confidence-level: 0.95  # 95% confidence for VaR calculations
-          lookback-days: 252      # 1 year of trading days for volatility
+# Management Endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
 
-        # Portfolio Settings
-        settings:
-          max-positions-per-portfolio: 50
-          min-cash-percentage: 5.0
-          max-single-position-percentage: 20.0
+---
+# Development Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/portfolio_db
+    username: portfolio_user
+    password: portfolio_password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
 
-      # Management Endpoints (for monitoring)
-      management:
-        endpoints:
-          web:
-            exposure:
-              include: health,info,metrics
-        endpoint:
-          health:
-            show-details: always
+logging:
+  level:
+    root: INFO
+    com.portfoliomanagement: DEBUG
 
-      # Development Profile Specific Settings
-      ---
-      spring:
-        config:
-          activate:
-            on-profile: dev
+---
+# Production Profile  
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/portfolio_db}
+    username: ${DATABASE_USERNAME:portfolio_user}
+    password: ${DATABASE_PASSWORD:portfolio_password}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
 
-        # Development database settings
-        datasource:
-          url: jdbc:postgresql://localhost:5432/portfolio_db_dev
-
-        jpa:
-          hibernate:
-            ddl-auto: create-drop
-          show-sql: true
-
-      ---
-      spring:
-        config:
-          activate:
-            on-profile: prod
-
-        # Production database settings (when we deploy)
-        datasource:
-          url: ${DATABASE_URL}
-          username: ${DB_USERNAME}
-          password: ${DB_PASSWORD}
-
-        jpa:
-          hibernate:
-            ddl-auto: validate  # Never auto-create tables in production
-          show-sql: false
-
-        logging:
-          level:
-            com.snig.investment-portfolio-manager: INFO
-            org.hibernate.SQL: WARN
+logging:
+  level:
+    root: WARN
+    com.portfoliomanagement: INFO
