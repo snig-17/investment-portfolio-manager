@@ -1,10 +1,10 @@
-package com.snig.investment_portfolio_manager.repository;
+package com.snig.investmentportfoliomanager.repository;
 
-import com.snig.investment_portfolio_manager.entity.Transaction;
-import com.snig.investment_portfolio_manager.entity.Portfolio;
-import com.snig.investment_portfolio_manager.entity.Asset;
-import com.snig.investment_portfolio_manager.entity.TransactionType;
-import com.snig.investment_portfolio_manager.entity.TransactionStatus;
+import com.snig.investmentportfoliomanager.entity.Transaction;
+import com.snig.investmentportfoliomanager.entity.Portfolio;
+import com.snig.investmentportfoliomanager.entity.Asset;
+import com.snig.investmentportfoliomanager.entity.enums.TransactionType;
+import com.snig.investmentportfoliomanager.entity.enums.TransactionStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

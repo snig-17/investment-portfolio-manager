@@ -1,8 +1,8 @@
-package com.snig.investment_portfolio_manager.repository;
+package com.snig.investmentportfoliomanager.repository;
 
-import com.snig.investment_portfolio_manager.entity.Position;
-import com.snig.investment_portfolio_manager.entity.Portfolio;
-import com.snig.investment_portfolio_manager.entity.Asset;
+import com.snig.investmentportfoliomanager.entity.Position;
+import com.snig.investmentportfoliomanager.entity.Portfolio;
+import com.snig.investmentportfoliomanager.entity.Asset;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -48,7 +48,7 @@ public interface PositionRepository extends JpaRepository<Position, Long> {
 
     // Find positions by asset type (stocks, bonds, ETFs)
     @Query("SELECT p FROM Position p WHERE p.asset.assetType = :assetType")
-    List<Position> findPositionsByAssetType(@Param("assetType") com.snig.investment_portfolio_manager.entity.AssetType assetType);
+    List<Position> findPositionsByAssetType(@Param("assetType") com.snig.investmentportfoliomanager.entity.enums.AssetType assetType);
 
     // Find positions in a specific sector
     @Query("SELECT p FROM Position p WHERE p.asset.sector = :sector")

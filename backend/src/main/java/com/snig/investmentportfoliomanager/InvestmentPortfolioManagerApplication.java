@@ -1,4 +1,4 @@
-package com.snig.investment_portfolio_manager;
+package com.snig.investmentportfoliomanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

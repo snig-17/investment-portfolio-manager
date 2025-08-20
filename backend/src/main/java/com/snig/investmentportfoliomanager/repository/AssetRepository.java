@@ -1,7 +1,7 @@
-package com.snig.investment_portfolio_manager.repository;
+package com.snig.investmentportfoliomanager.repository;
 
-import com.snig.investment_portfolio_manager.entity.Asset;
-import com.snig.investment_portfolio_manager.entity.AssetType;
+import com.snig.investmentportfoliomanager.entity.Asset;
+import com.snig.investmentportfoliomanager.entity.enums.AssetType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

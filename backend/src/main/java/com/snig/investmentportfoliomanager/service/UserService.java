@@ -1,7 +1,7 @@
-package com.snig.investment_portfolio_manager.service;
+package com.snig.investmentportfoliomanager.service;
 
-import com.snig.investment_portfolio_manager.entity.User;
-import com.snig.investment_portfolio_manager.repository.UserRepository;
+import com.snig.investmentportfoliomanager.entity.User;
+import com.snig.investmentportfoliomanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +56,6 @@ public class UserService {
     // Simple authentication (in real apps, use Spring Security)
     public boolean authenticateUser(String email, String password) {
         Optional<User> user = userRepository.findByEmail(email);
-        return user.isPresent() && user.get().getPassword().equals(password);
+        return user.isPresent() && user.get().getPasswordHash().equals(password);
     }
 }

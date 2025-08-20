@@ -36,7 +36,7 @@ server:
 # Logging Configuration
 logging:
   level:
-    com.portfoliomanagement: DEBUG
+    com.investmentportfoliomanagement: DEBUG
     org.springframework.web: DEBUG
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
@@ -69,7 +69,7 @@ spring:
 logging:
   level:
     root: INFO
-    com.portfoliomanagement: DEBUG
+    com.investmentportfoliomanagement: DEBUG
 
 ---
 # Production Profile  
@@ -89,4 +89,4 @@ spring:
 logging:
   level:
     root: WARN
-    com.portfoliomanagement: INFO
+    com.investmentportfoliomanagement: INFO
